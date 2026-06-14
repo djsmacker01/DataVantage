@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    font-family: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0d1117;
+  }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    background: linear-gradient(135deg, #0a1f20 0%, #0d1117 50%, #0f1a0f 100%);
+    display: flex;
+    align-items: center;
+    padding: 60px 80px;
+    gap: 60px;
+    overflow: hidden;
+  }
+
+  /* Background grid */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(1,105,111,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(1,105,111,0.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Glowing orbs */
+  .orb1 {
+    position: absolute;
+    top: -120px;
+    right: -80px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(1,105,111,0.25) 0%, transparent 70%);
+    filter: blur(40px);
+  }
+  .orb2 {
+    position: absolute;
+    bottom: -100px;
+    left: 300px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(209,153,0,0.12) 0%, transparent 70%);
+    filter: blur(40px);
+  }
+
+  /* Left — text */
+  .left {
+    flex: 1;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(1,105,111,0.4);
+    background: rgba(1,105,111,0.12);
+    color: #4dd0d6;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    width: fit-content;
+  }
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #01696f;
+    box-shadow: 0 0 8px rgba(1,105,111,0.8);
+  }
+
+  .headline {
+    font-family: 'Instrument Serif', 'Georgia', serif;
+    font-size: 52px;
+    line-height: 1.1;
+    color: #ffffff;
+    font-weight: 400;
+  }
+  .headline span {
+    color: #01c0c8;
+  }
+
+  .sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+    max-width: 480px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .tag {
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .site {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .site-icon {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .bar {
+    border-radius: 3px;
+  }
+  .site-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+  }
+  .dot-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+  .site-url {
+    font-size: 14px;
+    color: rgba(1,192,200,0.6);
+  }
+
+  /* Right — photo */
+  .right {
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+
+  .photo-wrap {
+    width: 260px;
+    height: 340px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 2px solid rgba(1,105,111,0.5);
+    position: relative;
+    box-shadow: 0 0 80px rgba(1,105,111,0.2), 0 32px 64px rgba(0,0,0,0.6);
+  }
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .photo-overlay {
+    position: absolute;
+    inset-x: 0;
+    bottom: 0;
+    height: 80px;
+    background: linear-gradient(to top, rgba(1,105,111,0.3), transparent);
+  }
+
+  .cert-badge {
+    position: absolute;
+    top: -16px;
+    right: -20px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(13,17,23,0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    text-align: center;
+  }
+  .cert-org {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #D19900;
+    margin-bottom: 2px;
+  }
+  .cert-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    white-space: nowrap;
+  }
+
+  .avail-badge {
+    position: absolute;
+    bottom: -16px;
+    left: -24px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #D19900, #a87a00);
+    box-shadow: 0 8px 24px rgba(209,153,0,0.4);
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* Accent line */
+  .accent-line {
+    position: absolute;
+    left: 80px;
+    bottom: 0;
+    width: 280px;
+    height: 2px;
+    background: linear-gradient(90deg, #01696f, #D19900, transparent);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="orb1"></div>
+  <div class="orb2"></div>
+  <div class="accent-line"></div>
+
+  <div class="left">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Lagos, Nigeria · Available for Projects
+    </div>
+
+    <div class="headline">
+      Your data has<br/>the answers —<br/><span>let me help</span><br/>you find them
+    </div>
+
+    <div class="sub">
+      Data analysis, Power BI, engineering &amp; training for Nigerian businesses.
+    </div>
+
+    <div class="tags">
+      <span class="tag">Power BI</span>
+      <span class="tag">SQL</span>
+      <span class="tag">Python</span>
+      <span class="tag">Data Engineering</span>
+      <span class="tag">Azure</span>
+      <span class="tag">ETL Pipelines</span>
+    </div>
+
+    <div class="site">
+      <div class="site-icon">
+        <svg width="20" height="20" viewBox="0 0 32 32">
+          <rect x="1" y="18" width="5" height="12" rx="2" fill="#01696f"/>
+          <rect x="8" y="12" width="5" height="18" rx="2" fill="#01696f"/>
+          <rect x="15" y="4" width="5" height="26" rx="2" fill="#D19900"/>
+          <rect x="22" y="14" width="5" height="16" rx="2" fill="#01696f"/>
+        </svg>
+      </div>
+      <span class="site-name">DataVantage</span>
+      <div class="dot-sep"></div>
+      <span class="site-url">datavantage.ng</span>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="cert-badge">
+      <div class="cert-org">Microsoft</div>
+      <div class="cert-title">Power BI Certified</div>
+    </div>
+
+    <div class="photo-wrap">
+      <img src="/images/muminah-shehu.jpg" alt="Muminah Shehu" />
+      <div class="photo-overlay"></div>
+    </div>
+
+    <div class="avail-badge">✦ Muminah Omolara Shehu</div>
+  </div>
+</div>
+</body>
+</html>
